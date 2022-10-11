@@ -58,7 +58,7 @@ const handleUserProfileShowReq = (req, res, next) => {
 
 
 //This method handles create profile request
-const handleUserProfileCreateReq = (req, res, next) => {
+const handleUserProfileCreateReq = async (req, res, next) => {
   console.log('Request received: /create');
 
   //Destructure all atrributes from the body of the request
@@ -77,7 +77,7 @@ const handleUserProfileCreateReq = (req, res, next) => {
   }
   else{
     //Check for a duplicate profile
-    Profile.findOne({name: name})
+    await Profile.findOne({name: name})
       .then((existingUser)=>{
         if(existingUser){
           console.log(`Profie already exists for user-> id: ${id}, name: ${name}`);

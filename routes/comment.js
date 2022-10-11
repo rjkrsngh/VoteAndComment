@@ -53,7 +53,63 @@ const handlePostCommentOnProfileReq = async (req, res, next) => {
 
 }
 
+const handleCommentLikeRequest = async (req, res, next) => {
+    const commentId = req.params.comment_id;
+
+    console.log(`received request: comment/like/${commentId}`);
+
+    let found = await Comment.findById(commentId).exec();
+
+    found.likes += 1;
+    await found.save()
+    .then((result)=>{
+        if(result){
+            console.log("Post liked!");
+
+            res.status(200).json({
+                message: "Post liked",
+                current_likes: result.likes
+            });
+        }
+        else{
+            console.log("Error liking post ->", err);
+
+            res.status(500).json({
+                message: "Error liking post"
+            });
+        }
+    });
+}
+
+const handleCommentUnlikeRequest = async (req, res, next) => {
+    const commentId = req.params.comment_id;
+
+    let found = await Comment.findById(commentId).exec();
+
+    found.likes -= 1;
+    await found.save()
+    .then((result)=>{
+        if(result){
+            console.log("Post unliked!");
+
+            res.status(200).json({
+                message: "Post unliked",
+                current_likes: result.likes
+            });
+        }
+        else{
+            console.log("Error unliking post ->", err);
+
+            res.status(500).json({
+                message: "Error unliking post"
+            });
+        }
+    });
+}
+
 //add APIs and their handler methods
-router.post('/comment', handlePostCommentOnProfileReq);
+router.post('/comment/create', handlePostCommentOnProfileReq);
+router.put('/comment/like/:comment_id', handleCommentLikeRequest);
+router.put('/comment/unlike/:comment_id', handleCommentUnlikeRequest);
 
 module.exports = router;
