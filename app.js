@@ -33,6 +33,7 @@ require('./models/profile');
 
 // Register authentication route
 app.use(require('./routes/profile'));
+app.use(require('./routes/comment'));
 
 const port =  process.env.PORT || 3000;
 

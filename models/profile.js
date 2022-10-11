@@ -41,8 +41,8 @@ const ProfileSchema = new mongoose.Schema({
         type: String
     },
     "comments": [{
-        type: ObjectId,
-        ref: 'Comment'
+            type: ObjectId,
+            ref: 'Comment'
     }]
 });
 

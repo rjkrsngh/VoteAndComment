@@ -71,7 +71,7 @@ const handleUserProfileCreateReq = (req, res, next) => {
 
   //name must not be empty
   if(name.trim().length === 0){
-    return res.status(400).json({
+    res.status(400).json({
       error : "mandatory field empty"
     });
   }
@@ -82,7 +82,7 @@ const handleUserProfileCreateReq = (req, res, next) => {
         if(existingUser){
           console.log(`Profie already exists for user-> id: ${id}, name: ${name}`);
 
-          return res.status(409).json({
+          res.status(409).json({
             message : "Profile already exists for user"
           });
         }
@@ -97,13 +97,13 @@ const handleUserProfileCreateReq = (req, res, next) => {
           //If unsuccessful, send appropriate failure response
           profile.save().then((newProfile)=>{
             console.log(`profile created: id: ${id}, user: ${name}`);
-            return res.status(201).json({
+            res.status(201).json({
               message: "profile created!"
             });
           }).catch((error)=>{
             console.log(`profile not created: id: ${id}, user: ${name}`);
 
-            return res.status(500).json({
+            res.status(500).json({
               message: "Internal Server Error. Please try again later"
             });
           });
