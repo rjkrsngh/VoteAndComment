@@ -12,7 +12,7 @@ const handlePostCommentOnProfileReq = async (req, res, next) => {
     console.log('post comment req received!');
 
     const {profileId, commentedBy, commentTitle, commentText,
-           mbti, ennegram, likes} = req.body;
+           mbti, ennegram, zodiac, likes} = req.body;
 
 
     // console.log("attributes in request");
@@ -23,7 +23,7 @@ const handlePostCommentOnProfileReq = async (req, res, next) => {
     //push it to comment array in Profile document
     const comment = new Comment({
         profileId, commentedBy, commentTitle,
-        commentText, mbti, ennegram, likes
+        commentText, mbti, ennegram, zodiac, likes
     });
 
     console.log(comment);

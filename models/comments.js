@@ -23,9 +23,12 @@ const CommentSchema = new mongoose.Schema({
     ennegram: {
         type: String
     },
+    zodiac: {
+        type: String
+    },
     likes: {
         type: Number
     }
-});
+}, {timestamps: true});
 
 mongoose.model('Comment', CommentSchema);
