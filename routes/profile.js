@@ -77,7 +77,7 @@ const handleUserProfileCreateReq = async (req, res, next) => {
   }
   else{
     //Check for a duplicate profile
-    await Profile.findOne({name: name})
+    await Profile.findOne({id: id})
       .then((existingUser)=>{
         if(existingUser){
           console.log(`Profie already exists for user-> id: ${id}, name: ${name}`);
@@ -125,6 +125,7 @@ const handleGetUserProfileByIdReq = (req, res, next) => {
     if(foundUser){
       console.log(`User with id : ${id} found`);
       console.log(foundUser);
+      res.status(200);
       res.render('profile_template', {
         profile: foundUser,
       });

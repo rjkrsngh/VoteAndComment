@@ -37,8 +37,10 @@ app.use(require('./routes/comment'));
 const port =  process.env.PORT || 3000;
 
 
+if(process.env.NODE_ENV != 'test'){
 // start server
 const server = app.listen(port, ()=>{
     console.log('Server is up and running on port: %s', port);
 });
-
+}
+module.exports = app;

@@ -38,7 +38,7 @@ const handlePostCommentOnProfileReq = async (req, res, next) => {
         }, (err, added)=>{
             if(!err){
                 console.log("added comment id to profile array");
-                res.status(200).json({
+                res.status(201).json({
                     message: "comment posted successfully"
                 });
             }
