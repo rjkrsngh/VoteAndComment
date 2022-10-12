@@ -23,11 +23,10 @@ mongoose.connection.on('error', () => {
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-// parse application/json
-app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-
+// parse application/json
+app.use(bodyParser.json());
 // Register user schema
 require('./models/profile');
 

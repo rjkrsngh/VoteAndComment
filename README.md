@@ -1,7 +1,7 @@
 # How to use this project
 
 #Task 1 - Create a user profile
-   a. use api '/profile/create/' to create a user profile
+   a. use api '/profile/create/', method=Post to create a user profile
    b. use below json as payload
 
         {
@@ -20,13 +20,13 @@
         }
 
 #Task 1 - Update the get route to handle profile ids in the url
-    a. use api 'profile/:id' to get the profile of a particular user
+    a. use api 'profile/:id', method=Get to get the profile of a particular user
         NOTE: id is not the id of object in mongodb. It is the id that we send in the create request
 
 ===================================================================================================================
 
 #Task 2 - Create a comment on profile
-    a. use api '/comment/create' to create a comment on a post
+    a. use api '/comment/create', method=Post to create a comment on a post
     b. use below JSON as payload
 
         {
@@ -41,10 +41,10 @@
         }
 
 #Task 2 - Like a comment
-    a. use api '/comment/like/:comment_id' to like a comment
+    a. use api '/comment/like/:comment_id', method=Put to like a comment
 
 #Task 2 - Unlike a comment
-    a. use api '/comment/unlike/:comment_id' to unlike a comment
+    a. use api '/comment/unlike/:comment_id', method=Put to unlike a comment
 
     NOTE: The comment id used to like or unlike a comment is a mongodb id
     E.g: comment/like/63455fdefa24f8c59fb2e577
@@ -57,3 +57,8 @@ Types used
 MBTI -> INFP, INFJ, ENFP, ENFJ, INTJ, INTP, ENTP, ENTJ, ISFP, ISFJ, ESFP, ESFJ, ISTP, ISTJ, ESTP, ESTJ
 Ennegram -> 1w2, 2w3, 3w2, 3w4, 4w3, 4w5, 5w4, 5w6, 6w5, 6w7, 7w6, 7w8, 8w7, 8w9, 9w8, 9w1
 Zodiac -> Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces
+
+#Task 2 - filter and sort comment 
+    a. Use api '/comment', method=Get
+
+    E.g: http://localhost:3000/comment?profile_id=63458a442e484187cbc079c1&filter_by=INTJ&sort_by=best

@@ -107,8 +107,65 @@ const handleCommentUnlikeRequest = async (req, res, next) => {
     });
 }
 
+const handleGetCommentsForProfileReq = async (req, res, next) => {
+    console.log('request received for get comments');
+
+    let profile_id = req.query.profile_id;
+    let filter_by = req.query.filter_by;
+    let sort_by = req.query.sort_by;
+
+    console.log('profile_id: %s, filter_by: %s, sort_by: %s', profile_id, filter_by, sort_by);
+
+    //Steps to perform filter and sort
+    //get the comment_id array from the profile document
+    //iterate over comment array and generate filtered array
+    //sort the array as per sort type received
+    
+    //Get all the comments from the profile for which comments are to be filtered and sorted
+    let profile = await Profile.findById(profile_id).exec();
+    const comment_id_list = profile.comments;
+
+    const filtered_arr = [];
+
+    if(filter_by === "all"){
+        for(let comment_id of comment_id_list){
+            let comment_doc = await Comment.findById(comment_id).select('-_id -profileId -__v').exec();
+            filtered_arr.push(comment_doc);
+        }
+    }
+    else{
+        for(let comment_id of comment_id_list){
+            let comment_doc = await Comment.findById(comment_id).select('-_id -profileId -__v').exec();
+    
+            if((comment_doc.mbti === filter_by) || 
+               (comment_doc.ennegram === filter_by) || 
+               (comment_doc.zodiac === filter_by))
+            {
+                filtered_arr.push(comment_doc);
+            }
+        }
+    }
+
+    if(sort_by === "best"){
+        filtered_arr.sort((doc1, doc2)=>{
+            return (doc2.likes - doc1.likes);
+        });
+    }
+    else{
+        //sort_by = "latest"
+        filtered_arr.sort((doc1, doc2)=>{
+            return (doc2.createdAt - doc1.createdAt);
+        })
+    }
+
+    res.status(200).json({
+        comments: filtered_arr
+    });
+}
+
 //add APIs and their handler methods
 router.post('/comment/create', handlePostCommentOnProfileReq);
+router.get('/comment', handleGetCommentsForProfileReq);
 router.put('/comment/like/:comment_id', handleCommentLikeRequest);
 router.put('/comment/unlike/:comment_id', handleCommentUnlikeRequest);
 
